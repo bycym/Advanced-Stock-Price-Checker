@@ -1,0 +1,34 @@
+FROM node:20.9-alpine3.18 as builder
+
+WORKDIR /opt/app
+
+COPY package.json package-lock.json ./
+
+RUN npm ci
+
+COPY . .
+
+COPY .env ./
+
+RUN npm run build
+
+FROM node:20.9-alpine3.18 as production
+
+WORKDIR /opt/app
+
+COPY package.json package-lock.json ./
+
+RUN npm ci --omit=dev
+
+COPY --from=builder /opt/app/dist/ ./dist/
+
+COPY prisma ./prisma 
+RUN npm run db:generate
+
+FROM node:20.9-alpine3.18 as final
+
+WORKDIR /opt/app
+
+COPY --from=production /opt/app/ ./
+
+CMD ["npm", "run", "start:prod"]

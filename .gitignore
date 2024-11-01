@@ -1,0 +1,19 @@
+.DS_Store
+.thumbs.db
+node_modules
+dist
+release
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local .env files
+.env.local*
+.env
+
+# exclude log files
+*.log
+
+coverage
