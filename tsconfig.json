@@ -16,6 +16,15 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@cron/*": ["src/cron/*"],
+      "@domain/*": ["src/core/domain/*"],
+      "@infrastructure/*": ["src/infrastructure/*"],
+      "@entity/*": ["src/infrastructure/persistence/entity/*"],
+      "@controller/*": ["src/interface/controller/*"],
+      "@interface/*": ["src/interface/*"],
+      "@lib/*": ["src/lib/*"]
+    }
   }
 }

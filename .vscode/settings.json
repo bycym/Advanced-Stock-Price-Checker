@@ -1,0 +1,23 @@
+{
+  "editor.bracketPairColorization.enabled": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.guides.bracketPairs": true,
+
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+
+  "stylelint.validate": ["css", "postcss", "vue"],
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#0feed4af",
+    "titleBar.activeBackground": "#48d4d9",
+    "titleBar.activeForeground": "#5809ce",
+    "icon.foreground": "#D37676",
+    "symbolIcon.colorForeground": "#EBC49F",
+    "icon.colorForeground": "#ff0000",
+    "activityBar.inactiveForeground": "#524747"
+  }
+}
