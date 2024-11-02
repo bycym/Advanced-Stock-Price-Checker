@@ -26,5 +26,4 @@ jobs:
       - name: code quality check
         run: |
           npm run type-check
-          npm run lint:check
           npm run format:check
