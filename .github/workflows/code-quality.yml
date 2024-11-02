@@ -1,7 +1,11 @@
-name: production-deploy
+name: code-quality
 on:
   push:
-    branches: [master]
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "feature/**"
 
 jobs:
   deploy:
