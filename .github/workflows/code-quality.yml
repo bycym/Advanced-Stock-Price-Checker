@@ -23,6 +23,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: install dependencies
+        run: npm ci
+
       - name: code quality check
         run: |
           npm run type-check
