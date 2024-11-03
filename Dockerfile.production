@@ -1,10 +1,19 @@
 FROM node:20.9-alpine3.18 as builder
 
+ARG PORT
+ARG DATABASE_USER
+ARG DATABASE_PASSWORD
+ARG DATABASE_DATABASE
+ARG DATABASE_HOST
+ARG DATABASE_PORT
+ARG FINNHUB_API
+ARG REDIS_URL
+
 WORKDIR /opt/app
 
 COPY package.json package-lock.json ./
 
-RUN npm ci
+RUN npm ci --omit=dev
 
 COPY . .
 
@@ -22,13 +31,10 @@ RUN npm ci --omit=dev
 
 COPY --from=builder /opt/app/dist/ ./dist/
 
-COPY prisma ./prisma 
-RUN npm run db:generate
-
 FROM node:20.9-alpine3.18 as final
 
 WORKDIR /opt/app
 
 COPY --from=production /opt/app/ ./
 
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start"]

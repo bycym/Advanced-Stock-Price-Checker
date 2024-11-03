@@ -34,13 +34,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bash -c 'npm run start'
     volumes:
       - .:/opt/app:delegated
-      - stock_price_api_node_modules:/opt/app/node_modules
     ports:
       - ${PORT:-3000}:${PORT:-3000}
     environment:
+      - PORT=${PORT}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_DATABASE=${DATABASE_DATABASE}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=${DATABASE_PORT}
       - FINNHUB_API=${FINNHUB_API}
       - REDIS_URL=${REDIS_URL}
     depends_on:
@@ -48,7 +52,6 @@ services:
       - redis
 
 volumes:
-  stock_price_api_node_modules:
   stock_price_db:
     driver: local
 
