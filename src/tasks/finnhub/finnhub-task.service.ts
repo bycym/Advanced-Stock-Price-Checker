@@ -16,8 +16,7 @@ export class FinnhubTaskService {
   ) {}
   private readonly log = new Logger(FinnhubTaskService.name);
 
-  // @Cron(CronExpression.EVERY_4_HOURS)
-  @Cron(CronExpression.EVERY_5_SECONDS)
+  @Cron(CronExpression.EVERY_4_HOURS)
   async handleCron() {
     this.log.debug(`${FinnhubTaskService.name} started. ⏳`);
 
