@@ -21,7 +21,8 @@ export class StockPriceService implements IStockPriceService {
   ) {}
 
   async findAll(): Promise<IStockPriceEntity[]> {
-    return await this.stockPriceRepository.find();
+    const data = await this.stockPriceRepository.find();
+    return data;
   }
 
   async findBySymbol(symbol: string): Promise<IStockPriceEntity | null> {
@@ -31,7 +32,7 @@ export class StockPriceService implements IStockPriceService {
     if (stockPriceEntity) return stockPriceEntity;
     return null;
   }
-  async create(symbol: string): Promise<StockPriceEntity> {
+  async create(symbol: string): Promise<IStockPriceEntity> {
     const stockPriceEntity = await this.stockPriceRepository.findOneBy({
       symbol: symbol,
     });

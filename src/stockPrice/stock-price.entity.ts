@@ -15,12 +15,12 @@ export class StockPriceEntity implements IStockPriceEntity {
   })
   symbol!: string;
 
-  @Column({ type: "decimal", nullable: true })
+  @Column({ type: "real", nullable: true })
   price!: number;
 
   @Column({ type: "time", nullable: true })
   updated!: Date;
 
-  @Column({ type: "decimal", nullable: true })
+  @Column({ type: "real", nullable: true })
   movingAverage!: number;
 }

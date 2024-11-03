@@ -31,9 +31,9 @@ export class FinnhubTaskService {
         );
         // await RedisCaching.setValue(`${stockSymbol}`, JSON.stringify(data));
         const newMovingAverage =
-          stockPrice.movingAverage === 0
+          stockPrice.movingAverage === 0 || stockPrice.price == null
             ? data.c
-            : (data.c + (stockPrice.price as number)) / 2;
+            : (data.c + stockPrice.price) / 2;
 
         const newStockPrice = {
           price: data.c,
