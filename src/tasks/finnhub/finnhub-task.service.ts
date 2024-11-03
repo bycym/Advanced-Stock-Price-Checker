@@ -1,5 +1,7 @@
 import { get } from "@lib/fetch-cache-data";
 import { finnhubDataType } from "./type";
+import { config } from "dotenv";
+config();
 
 const API_KEY = process.env.FINNHUB_API;
 const createURL = (stockSymbol: string) =>
@@ -12,7 +14,6 @@ import {
   IStockPriceEntity,
   StockPriceEntity,
 } from "@stockPrice/stock-price.entity";
-import { logger } from "@lib/logger/logger";
 
 @Injectable()
 export class FinnhubTaskService {
@@ -43,6 +44,6 @@ export class FinnhubTaskService {
       })
     );
 
-    logger.info(`${FinnhubTaskService.name} ended.`);
+    this.log.debug(`${FinnhubTaskService.name} ended.`);
   }
 }
