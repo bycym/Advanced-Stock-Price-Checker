@@ -1,25 +1,33 @@
 export interface IStockPrice {
   symbol: string;
-  stockPrice: number;
+  price: number;
   updated: Date;
   movingAverage: number;
 }
 
 export class StockPrice implements IStockPrice {
   symbol: string;
-  stockPrice: number;
+  price: number;
   updated: Date;
   movingAverage: number;
 
   constructor(
     symbol: string,
-    stockPrice: number,
+    price: number,
     updated: Date,
     movingAverage: number
   ) {
     this.symbol = symbol;
-    this.stockPrice = stockPrice;
+    this.price = price;
     this.updated = updated;
     this.movingAverage = movingAverage;
   }
+}
+
+export interface StockPriceRO {
+  stockPrice: {
+    currentPrice: number;
+    updated: string;
+    movingAverage: number;
+  };
 }

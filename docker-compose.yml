@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  redis:
+    hostname: "stock_price_redis"
+    image: redis
+    ports:
+      - 63791:6379
+    networks:
+      - stock-price-network
+  db:
+    hostname: "stock_price_db"
+    networks:
+      - stock-price-network
+    image: postgres
+    restart: always
+    volumes:
+      - stock_price_db:/var/lib/postgresql/data
+    ports:
+      - ${DATABASE_PORT:-5432}:${DATABASE_PORT:-5432}
+    environment:
+      POSTGRES_USER: ${DATABASE_USER:-user}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-password}
+      POSTGRES_DB: ${DATABASE_DATABASE:-main}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d main"]
+      interval: 1s
+      timeout: 5s
+      retries: 20
+  app:
+    hostname: "stock_price_api"
+    networks:
+      - stock-price-network
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c 'npm run start'
+    volumes:
+      - .:/opt/app:delegated
+      - stock_price_api_node_modules:/opt/app/node_modules
+    ports:
+      - ${PORT:-3000}:${PORT:-3000}
+    environment:
+      - FINNHUB_API=${FINNHUB_API}
+      - REDIS_URL=${REDIS_URL}
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  stock_price_api_node_modules:
+  stock_price_db:
+    driver: local
+
+networks:
+  stock-price-network:
+    name: stock-price-network
+    driver: bridge
