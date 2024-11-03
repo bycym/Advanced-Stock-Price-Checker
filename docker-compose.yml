@@ -43,10 +43,10 @@ services:
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - DATABASE_DATABASE=${DATABASE_DATABASE}
-      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_HOST=stock_price_db
       - DATABASE_PORT=${DATABASE_PORT}
       - FINNHUB_API=${FINNHUB_API}
-      - REDIS_URL=${REDIS_URL}
+      - REDIS_URL=redis://stock_price_redis:6379
     depends_on:
       - db
       - redis
