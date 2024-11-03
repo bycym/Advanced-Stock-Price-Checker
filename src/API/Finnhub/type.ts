@@ -1,4 +1,4 @@
-export interface finnhubDataType {
+export interface FinnhubDataType {
   c: number;
   d: number;
   dp: number;

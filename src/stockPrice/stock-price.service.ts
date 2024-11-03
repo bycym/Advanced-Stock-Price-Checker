@@ -1,6 +1,8 @@
+import { logger } from "@lib/logger/logger";
 import { IStockPriceEntity, StockPriceEntity } from "./stock-price.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { FinnHubAPIService } from "src/API/Finnhub/finnhub-api.service";
 import { Repository } from "typeorm";
 
 export interface IStockPriceService {
@@ -14,7 +16,8 @@ export interface IStockPriceService {
 export class StockPriceService implements IStockPriceService {
   constructor(
     @InjectRepository(StockPriceEntity)
-    private readonly stockPriceRepository: Repository<StockPriceEntity>
+    private readonly stockPriceRepository: Repository<StockPriceEntity>,
+    private readonly finnHubAPIService: FinnHubAPIService
   ) {}
 
   async findAll(): Promise<IStockPriceEntity[]> {
@@ -33,6 +36,13 @@ export class StockPriceService implements IStockPriceService {
       symbol: symbol,
     });
     if (stockPriceEntity) return stockPriceEntity;
+
+    const isValidSymbol = await this.finnHubAPIService.isValid(symbol);
+    if (!isValidSymbol) {
+      logger.error(`${symbol} invalid symbol.`);
+      return null;
+    }
+
     const newStockPriceEntity = {
       symbol: symbol,
       updated: new Date(),

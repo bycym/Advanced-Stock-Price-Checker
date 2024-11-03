@@ -35,7 +35,7 @@ export class StockPriceController {
 
     const _stockPrice = await this.stockPriceService.findBySymbol(symbol);
     const errors = { stockPrice: " not found" };
-    if (!_stockPrice) throw new HttpException({ errors }, 401);
+    if (!_stockPrice) throw new HttpException({ errors }, 404);
     const { movingAverage, price, updated } = _stockPrice;
     const stockPrice = {
       currentPrice: price,
@@ -60,7 +60,7 @@ export class StockPriceController {
     );
     const _stockPrice = await this.stockPriceService.create(symbol);
     const errors = { stockPrice: " not found" };
-    if (!_stockPrice) throw new HttpException({ errors }, 401);
+    if (!_stockPrice) throw new HttpException({ errors }, 404);
     const { movingAverage, price, updated } = _stockPrice;
     const stockPrice = {
       currentPrice: price,

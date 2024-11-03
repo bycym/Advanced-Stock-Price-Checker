@@ -1,49 +1,50 @@
-import { get } from "@lib/fetch-cache-data";
-import { finnhubDataType } from "./type";
+import { FinnhubDataType } from "../../API/Finnhub/type";
 import { config } from "dotenv";
 config();
-
-const API_KEY = process.env.FINNHUB_API;
-const createURL = (stockSymbol: string) =>
-  `https://finnhub.io/api/v1/quote?symbol=${stockSymbol}&token=` + API_KEY;
 
 import { Injectable, Logger } from "@nestjs/common";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import { StockPriceService } from "@stockPrice/stock-price.service";
-import {
-  IStockPriceEntity,
-  StockPriceEntity,
-} from "@stockPrice/stock-price.entity";
+import { StockPriceEntity } from "@stockPrice/stock-price.entity";
+import { FinnHubAPIService } from "src/API/Finnhub/finnhub-api.service";
 
 @Injectable()
 export class FinnhubTaskService {
-  constructor(private readonly stockPriceService: StockPriceService) {}
+  constructor(
+    private readonly stockPriceService: StockPriceService,
+    private readonly finnHubAPIService: FinnHubAPIService
+  ) {}
   private readonly log = new Logger(FinnhubTaskService.name);
 
   // @Cron(CronExpression.EVERY_4_HOURS)
   @Cron(CronExpression.EVERY_5_SECONDS)
   async handleCron() {
-    this.log.debug(`${FinnhubTaskService.name} started.`);
+    this.log.debug(`${FinnhubTaskService.name} started. ⏳`);
 
     const stockSymbols = await this.stockPriceService.findAll();
     if (!stockSymbols) return;
 
     await Promise.all(
-      stockSymbols.map(async (stockPrice: IStockPriceEntity) => {
-        const data: finnhubDataType = await get(createURL(stockPrice.symbol));
+      stockSymbols.map(async (stockPrice: StockPriceEntity) => {
+        const data: FinnhubDataType = await this.finnHubAPIService.getData(
+          stockPrice.symbol
+        );
         // await RedisCaching.setValue(`${stockSymbol}`, JSON.stringify(data));
-        this.log.debug(JSON.stringify(data));
+        const newMovingAverage =
+          stockPrice.movingAverage === 0
+            ? data.c
+            : (data.c + (stockPrice.price as number)) / 2;
 
         const newStockPrice = {
           price: data.c,
           updated: new Date(),
-          movingAverage: 0,
+          movingAverage: newMovingAverage,
         } as StockPriceEntity;
 
         this.stockPriceService.update(newStockPrice);
       })
     );
 
-    this.log.debug(`${FinnhubTaskService.name} ended.`);
+    this.log.debug(`${FinnhubTaskService.name} ended. ✅`);
   }
 }

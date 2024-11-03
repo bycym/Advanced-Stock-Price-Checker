@@ -7,12 +7,14 @@ import { StockPriceEntity } from "@stockPrice/stock-price.entity";
 import { StockPriceModule } from "./stockPrice/stock-price.module";
 import { ScheduleModule } from "@nestjs/schedule";
 import { FinnHubTaskModule } from "./tasks/finnhub/finnhub-task.module";
+import { FinnHubApiModule } from "./API/Finnhub/finnhub-api.module";
 // import configuration from "./config/configuration";
 
 @Module({
   imports: [
     FinnHubTaskModule,
     StockPriceModule,
+    FinnHubApiModule,
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({ envFilePath: ".env" }),
     // ConfigModule.forRoot({

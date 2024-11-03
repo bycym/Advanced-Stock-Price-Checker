@@ -1,8 +1,8 @@
 import axios from "axios";
 import { logger } from "./logger/logger";
-import { finnhubDataType } from "src/tasks/finnhub/type";
+import { FinnhubDataType } from "src/API/Finnhub/type";
 
-export async function get(url: string): Promise<finnhubDataType> {
+export async function get(url: string): Promise<FinnhubDataType> {
   try {
     const response = await axios.get(url);
     const data = response.data;
