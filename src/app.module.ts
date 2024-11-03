@@ -28,10 +28,10 @@ import { FinnHubApiModule } from "./API/Finnhub/finnhub-api.module";
       password: process.env.DATABASE_PASSWORD ?? "password",
       database: process.env.DATABASE_DATABASE ?? "main",
       entities: [StockPriceEntity],
-      synchronize: true,
-    }),
+      synchronize: true
+    })
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService]
 })
 export class AppModule {}

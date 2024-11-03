@@ -9,7 +9,7 @@ import { FinnHubApiModule } from "src/API/Finnhub/finnhub-api.module";
   imports: [TypeOrmModule.forFeature([StockPriceEntity]), FinnHubApiModule],
   providers: [StockPriceService],
   exports: [StockPriceService],
-  controllers: [StockPriceController],
+  controllers: [StockPriceController]
 })
 export class StockPriceModule implements NestModule {
   public configure(consumer: MiddlewareConsumer) {}

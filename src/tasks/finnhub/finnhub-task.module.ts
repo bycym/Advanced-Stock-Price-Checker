@@ -5,6 +5,6 @@ import { FinnHubApiModule } from "src/API/Finnhub/finnhub-api.module";
 
 @Module({
   imports: [StockPriceModule, FinnHubApiModule],
-  providers: [FinnhubTaskService],
+  providers: [FinnhubTaskService]
 })
 export class FinnHubTaskModule {}

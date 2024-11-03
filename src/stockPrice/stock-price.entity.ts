@@ -11,7 +11,7 @@ export class StockPriceEntity implements IStockPriceEntity {
   @PrimaryColumn({
     type: "text",
     unique: true,
-    nullable: false,
+    nullable: false
   })
   symbol!: string;
 

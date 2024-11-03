@@ -3,7 +3,7 @@ import { FinnHubAPIService } from "./finnhub-api.service";
 
 @Module({
   providers: [FinnHubAPIService],
-  exports: [FinnHubAPIService],
+  exports: [FinnHubAPIService]
 })
 export class FinnHubApiModule implements NestModule {
   public configure(consumer: MiddlewareConsumer) {}

@@ -9,7 +9,7 @@ export class RedisCaching {
   public static async getInstance(): Promise<RedisClientType> {
     if (!RedisCaching.instance) {
       RedisCaching.instance = createClient({
-        url: process.env.REDIS_URL ?? "redis://localhost:6379",
+        url: process.env.REDIS_URL ?? "redis://localhost:6379"
       });
 
       RedisCaching.instance.connect().catch(logger.error);

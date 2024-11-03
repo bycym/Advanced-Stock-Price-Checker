@@ -5,7 +5,7 @@ import {
   Header,
   HttpCode,
   Put,
-  HttpException,
+  HttpException
 } from "@nestjs/common";
 
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
@@ -40,7 +40,7 @@ export class StockPriceController {
     const stockPrice = {
       currentPrice: price,
       updated: updated.toDateString(),
-      movingAverage,
+      movingAverage
     };
     return { stockPrice };
   }
@@ -65,7 +65,7 @@ export class StockPriceController {
     const stockPrice = {
       currentPrice: price,
       updated: updated.toDateString(),
-      movingAverage,
+      movingAverage
     };
     return { stockPrice };
   }

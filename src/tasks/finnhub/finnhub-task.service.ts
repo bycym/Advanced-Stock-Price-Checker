@@ -37,7 +37,7 @@ export class FinnhubTaskService {
         const newStockPrice = {
           price: data.c,
           updated: new Date(),
-          movingAverage: newMovingAverage,
+          movingAverage: newMovingAverage
         } as StockPriceEntity;
 
         this.stockPriceService.update(newStockPrice);

@@ -27,14 +27,14 @@ export class StockPriceService implements IStockPriceService {
 
   async findBySymbol(symbol: string): Promise<IStockPriceEntity | null> {
     const stockPriceEntity = await this.stockPriceRepository.findOneBy({
-      symbol: symbol,
+      symbol: symbol
     });
     if (stockPriceEntity) return stockPriceEntity;
     return null;
   }
   async create(symbol: string): Promise<IStockPriceEntity> {
     const stockPriceEntity = await this.stockPriceRepository.findOneBy({
-      symbol: symbol,
+      symbol: symbol
     });
     if (stockPriceEntity) return stockPriceEntity;
 
@@ -46,14 +46,14 @@ export class StockPriceService implements IStockPriceService {
 
     const newStockPriceEntity = {
       symbol: symbol,
-      updated: new Date(),
+      updated: new Date()
     } as StockPriceEntity;
     return await this.stockPriceRepository.save(newStockPriceEntity);
   }
 
   async update(stockPrice: IStockPriceEntity): Promise<IStockPriceEntity> {
     const storedStockPriceEntity = await this.stockPriceRepository.findOneBy({
-      symbol: stockPrice.symbol,
+      symbol: stockPrice.symbol
     });
 
     if (!storedStockPriceEntity) throw new Error("Missing symbol");
